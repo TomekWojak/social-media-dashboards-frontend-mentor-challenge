@@ -23,7 +23,6 @@
 	--mainText: hsl(230, 17%, 14%);
 	--text: hsl(228, 12%, 44%);
 	--paddingInline: clamp(2em, calc(2em + 1vw), 4em);
-	--cardHover: hsla(230, 22%, 74%, 0.476);
 }
 html {
 	font-size: 62.5%;
@@ -32,8 +31,13 @@ html {
 	width: 100%;
 	max-width: 1200px;
 	margin: 0 auto;
+	padding: 3em var(--paddingInline);
 }
-
+@mixin txtStyles {
+	font-weight: 700;
+	color: var(--text);
+	font-size: clamp(1.2rem, 3vw, 1.4rem);
+}
 body {
 	font-family: "Inter", sans-serif;
 	background: var(--mainBg);
@@ -61,18 +65,13 @@ body.dark {
 		z-index: -1;
 		border-radius: 0 0 30px 30px;
 	}
-	&__content {
-		padding: 3em var(--paddingInline);
-	}
 	&__title {
 		margin-block-end: 0.2em;
 		font-size: clamp(2.2rem, 7vw, 2.7rem);
 		color: var(--mainText);
 	}
 	&__text {
-		font-weight: 700;
-		color: var(--text);
-		font-size: clamp(1.2rem, 3vw, 1.4rem);
+		@include txtStyles;
 
 		img {
 			margin-inline-end: 0.3em;
@@ -144,6 +143,9 @@ body.dark {
 		&:last-child::before {
 			background: var(--darkerRed);
 		}
+		&:last-child .dashboards__today-score {
+			color: var(--red);
+		}
 	}
 	&__number {
 		margin-block-start: 0.4em;
@@ -169,6 +171,12 @@ body.dark {
 		}
 	}
 }
+.overviews {
+	&__text {
+		@include txtStyles;
+	}
+    
+}
 @media (576px <= width) {
 	.dashboards {
 		&__dashboard {
@@ -180,25 +188,11 @@ body.dark {
 	body.dark .dashboards__mode-toggler:hover::before {
 		background-color: var(--topBg);
 	}
-    body.dark .dashboards__dashboard {
-        &::after {
-            opacity: 0;
-            content: '';
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            inset: 0;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: inherit;
-            transition: opacity .3s;
-        }
-        &:hover {
-            background-color: var(--cardBg);
-        }
-        &:hover::after {
-            opacity: 1;
-        }
-    }
+	body.dark .dashboards__dashboard {
+		&::after {
+			background-color: rgba(255, 255, 255, 0.05);
+		}
+	}
 	.dashboards {
 		&__top-bg {
 			border-radius: 0 0 15px 15px;
@@ -244,9 +238,22 @@ body.dark {
 		}
 		&__dashboard {
 			width: calc(50% - 1em);
+			z-index: 0;
 
-			&:hover {
-				background-color: var(--cardHover);
+			&::after {
+				opacity: 0;
+				content: "";
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				inset: 0;
+				background-color: hsla(230, 22%, 74%, 0.243);
+				border-radius: inherit;
+				transition: opacity 0.3s;
+				z-index: -1;
+			}
+			&:hover::after {
+				opacity: 1;
 			}
 		}
 	}
@@ -263,10 +270,10 @@ body.dark {
 		&__dashboard {
 			width: calc(25% - 1.5em);
 		}
-        &__text {
-            img {
-                width: 21px;
-            }
-        }
+		&__text {
+			img {
+				width: 21px;
+			}
+		}
 	}
 }

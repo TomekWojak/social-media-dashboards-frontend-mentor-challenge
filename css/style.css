@@ -24,7 +24,6 @@
   --mainText: hsl(230, 17%, 14%);
   --text: hsl(228, 12%, 44%);
   --paddingInline: clamp(2em, calc(2em + 1vw), 4em);
-  --cardHover: hsla(230, 22%, 74%, 0.476);
 }
 
 html {
@@ -35,6 +34,7 @@ html {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 3em var(--paddingInline);
 }
 
 body {
@@ -62,9 +62,6 @@ body.dark {
   position: absolute;
   z-index: -1;
   border-radius: 0 0 30px 30px;
-}
-.dashboards__content {
-  padding: 3em var(--paddingInline);
 }
 .dashboards__title {
   margin-block-end: 0.2em;
@@ -143,6 +140,9 @@ body.dark {
 .dashboards__dashboard:last-child::before {
   background: var(--darkerRed);
 }
+.dashboards__dashboard:last-child .dashboards__today-score {
+  color: var(--red);
+}
 .dashboards__number {
   margin-block-start: 0.4em;
   font-size: clamp(4.5rem, 10vw, 6rem);
@@ -167,6 +167,12 @@ body.dark {
   vertical-align: middle;
 }
 
+.overviews__text {
+  font-weight: 700;
+  color: var(--text);
+  font-size: clamp(1.2rem, 3vw, 1.4rem);
+}
+
 @media (576px <= width) {
   .dashboards__dashboard {
     padding: 4em 0;
@@ -177,21 +183,7 @@ body.dark {
     background-color: var(--topBg);
   }
   body.dark .dashboards__dashboard::after {
-    opacity: 0;
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    inset: 0;
     background-color: rgba(255, 255, 255, 0.05);
-    border-radius: inherit;
-    transition: opacity 0.3s;
-  }
-  body.dark .dashboards__dashboard:hover {
-    background-color: var(--cardBg);
-  }
-  body.dark .dashboards__dashboard:hover::after {
-    opacity: 1;
   }
   .dashboards__top-bg {
     border-radius: 0 0 15px 15px;
@@ -233,9 +225,22 @@ body.dark {
   }
   .dashboards__dashboard {
     width: calc(50% - 1em);
+    z-index: 0;
   }
-  .dashboards__dashboard:hover {
-    background-color: var(--cardHover);
+  .dashboards__dashboard::after {
+    opacity: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    background-color: hsla(230, 22%, 74%, 0.243);
+    border-radius: inherit;
+    transition: opacity 0.3s;
+    z-index: -1;
+  }
+  .dashboards__dashboard:hover::after {
+    opacity: 1;
   }
 }
 @media (992px <= width) {
