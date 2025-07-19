@@ -23,6 +23,7 @@
 	--mainText: hsl(230, 17%, 14%);
 	--text: hsl(228, 12%, 44%);
 	--paddingInline: clamp(2em, calc(2em + 1vw), 4em);
+	--txtSize: clamp(1.2rem, 3vw, 1.4rem);
 }
 html {
 	font-size: 62.5%;
@@ -36,7 +37,24 @@ html {
 @mixin txtStyles {
 	font-weight: 700;
 	color: var(--text);
-	font-size: clamp(1.2rem, 3vw, 1.4rem);
+	font-size: var(--txtSize);
+}
+@mixin titleStyles {
+	margin-block-end: 0.2em;
+	font-size: clamp(2.2rem, 7vw, 2.7rem);
+	color: var(--mainText);
+}
+@mixin hoverElement {
+	opacity: 0;
+	content: "";
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	inset: 0;
+	background-color: hsla(230, 22%, 74%, 0.243);
+	border-radius: inherit;
+	transition: opacity 0.3s;
+	z-index: -1;
 }
 body {
 	font-family: "Inter", sans-serif;
@@ -55,7 +73,9 @@ body.dark {
 		hsl(146, 68%, 55%)
 	);
 }
-
+body.dark .overviews__title {
+	color: hsl(0, 100%, 100%);
+}
 .dashboards {
 	&__top-bg {
 		background-color: var(--topBg);
@@ -66,9 +86,7 @@ body.dark {
 		border-radius: 0 0 30px 30px;
 	}
 	&__title {
-		margin-block-end: 0.2em;
-		font-size: clamp(2.2rem, 7vw, 2.7rem);
-		color: var(--mainText);
+		@include titleStyles;
 	}
 	&__text {
 		@include txtStyles;
@@ -164,7 +182,7 @@ body.dark {
 		margin-block-start: 2em;
 		font-weight: 700;
 		color: var(--green);
-		font-size: clamp(1.2rem, 3vw, 1.4rem);
+		font-size: var(--txtSize);
 		img {
 			margin-inline-end: 0.1em;
 			vertical-align: middle;
@@ -172,10 +190,53 @@ body.dark {
 	}
 }
 .overviews {
+	&__overview {
+		margin-block-start: 2em;
+		padding: 2em;
+		background-color: var(--cardBg);
+		border-radius: 5px;
+
+		&:nth-of-type(2) .overviews__stats,
+		&:nth-of-type(7) .overviews__stats,
+		&:nth-of-type(8) .overviews__stats {
+			color: var(--red);
+		}
+	}
+	&__title {
+		@include titleStyles;
+		color: var(--text);
+	}
+	&__icon {
+		width: 18px;
+		height: auto;
+	}
 	&__text {
 		@include txtStyles;
 	}
-    
+	&__head,
+	&__body {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	&__body {
+		margin-block-start: 1.8em;
+	}
+	&__number {
+		font-weight: 700;
+		font-size: clamp(2.5rem, 5vw, 3rem);
+		color: var(--mainText);
+	}
+	&__stats {
+		color: var(--green);
+		font-weight: 700;
+		font-size: var(--txtSize);
+
+		img {
+			vertical-align: middle;
+			margin-inline-end: 0.1em;
+		}
+	}
 }
 @media (576px <= width) {
 	.dashboards {
@@ -183,12 +244,26 @@ body.dark {
 			padding: 4em 0;
 		}
 	}
+	.overviews {
+		&__icon {
+			width: 20px;
+		}
+		&__container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+		&__overview {
+			width: calc(50% - 1em);
+		}
+	}
 }
 @media (768px <= width) {
 	body.dark .dashboards__mode-toggler:hover::before {
 		background-color: var(--topBg);
 	}
-	body.dark .dashboards__dashboard {
+	body.dark .dashboards__dashboard,
+	body.dark .overviews__overview {
 		&::after {
 			background-color: rgba(255, 255, 255, 0.05);
 		}
@@ -241,19 +316,29 @@ body.dark {
 			z-index: 0;
 
 			&::after {
-				opacity: 0;
-				content: "";
-				width: 100%;
-				height: 100%;
-				position: absolute;
-				inset: 0;
-				background-color: hsla(230, 22%, 74%, 0.243);
-				border-radius: inherit;
-				transition: opacity 0.3s;
-				z-index: -1;
+				@include hoverElement;
 			}
 			&:hover::after {
 				opacity: 1;
+			}
+		}
+	}
+	.overviews {
+		&__overview {
+			position: relative;
+			z-index: 0;
+			width: calc(33.33% - 1.5em);
+
+			&::after {
+				@include hoverElement;
+			}
+			&:hover::after {
+				opacity: 1;
+			}
+
+			&:last-child {
+				margin-inline-end: auto;
+				margin-inline-start: 2em;
 			}
 		}
 	}
@@ -273,6 +358,16 @@ body.dark {
 		&__text {
 			img {
 				width: 21px;
+			}
+		}
+	}
+	.overviews {
+		&__overview {
+			width: calc(25% - 1.5em);
+
+			&:last-child {
+				margin-inline-start: 0;
+				margin-inline-end: 0;
 			}
 		}
 	}
