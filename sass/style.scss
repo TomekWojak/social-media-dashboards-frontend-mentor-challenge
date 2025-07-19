@@ -321,6 +321,12 @@ body.dark .overviews__title {
 			&:hover::after {
 				opacity: 1;
 			}
+			&:hover .dashboard__today-score-icon {
+				animation: increaseArrow 1s 2 ease-in-out;
+			}
+			&:last-child:hover .dashboard__today-score-icon {
+				animation: decreaseArrow 1s 2 ease-in-out;
+			}
 		}
 	}
 	.overviews {
@@ -335,10 +341,17 @@ body.dark .overviews__title {
 			&:hover::after {
 				opacity: 1;
 			}
-
+			&:hover .overview__stats-icon {
+				animation: increaseArrow 1s 2 ease-in-out;
+			}
 			&:last-child {
 				margin-inline-end: auto;
 				margin-inline-start: 2em;
+			}
+			&:nth-of-type(2):hover .overview__stats-icon,
+			&:nth-of-type(7):hover .overview__stats-icon,
+			&:nth-of-type(8):hover .overview__stats-icon {
+				animation: decreaseArrow 1s 2 ease-in-out;
 			}
 		}
 	}
@@ -370,5 +383,24 @@ body.dark .overviews__title {
 				margin-inline-end: 0;
 			}
 		}
+	}
+}
+
+@keyframes decreaseArrow {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(2px);
+	}
+}
+@keyframes increaseArrow {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-2px);
 	}
 }
