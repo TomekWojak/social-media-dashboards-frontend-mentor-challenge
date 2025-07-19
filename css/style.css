@@ -123,6 +123,7 @@ body.dark .overviews__title {
   padding: 2em 0;
   background-color: var(--cardBg);
   border-radius: 5px;
+  cursor: pointer;
 }
 .dashboards__dashboard::before {
   position: absolute;
@@ -177,6 +178,7 @@ body.dark .overviews__title {
   padding: 2em;
   background-color: var(--cardBg);
   border-radius: 5px;
+  cursor: pointer;
 }
 .overviews__overview:nth-of-type(2) .overviews__stats, .overviews__overview:nth-of-type(7) .overviews__stats, .overviews__overview:nth-of-type(8) .overviews__stats {
   color: var(--red);
